@@ -1,15 +1,45 @@
 using UnityEngine;
 
+/// <summary>
+/// script for camera controls
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class RotatingCamera : MonoBehaviour
 {
+    /// <summary>
+    /// the distance from the target point when the game starts
+    /// </summary>
     public float initialDistance = 10f;
+    /// <summary>
+    /// how fast the camera zooms in and out when using the scroll wheel
+    /// </summary>
     public float zoomSpeed = 10f;
-    public float zoomKeySpeed = 0.01f; // Speed for zooming with keys
+    /// <summary>
+    /// how fast the camera zooms in and out when using the + and - keys (or = key for +)
+    /// </summary>
+    public float zoomKeySpeed = 0.01f;
+    /// <summary>
+    /// smooth time for zooming, smaller values will make the zoom feel more responsive but less smooth, larger values will make the zoom feel smoother but less responsive
+    /// </summary>
     public float zoomSmoothTime = 0.2f;
+    /// <summary>
+    /// speed at which the camera rotates when using the arrow keys
+    /// </summary>
     public float rotationSpeed = 100f;
-    public bool invertY = false; // Invert Y-axis for mouse movement
+    /// <summary>
+    /// invert y axis in camera controls
+    /// </summary>
+    /// <remarks>
+    /// i like having this on
+    /// </remarks>
+    public bool invertY = true;
+    /// <summary>
+    /// how sensitive the camera rotation is to mouse movement
+    /// </summary>
     public float mouseSensitivity = 0.3f;
+    /// <summary>
+    /// The initial pitch angle, in degrees, used to set the starting orientation.
+    /// </summary>
     public float initialPitch = 45f;
 
     public float minSize = 2f;
@@ -27,11 +57,7 @@ public class RotatingCamera : MonoBehaviour
     {
         get
         {
-            if (Level.selectedPlayer == null)
-            {
-                return target;
-            }
-            target = Level.selectedPlayer.transform.position;
+            target = new(0, 3, 0); // placeholder TODO: make this follow the player
             return target;
         }
     }

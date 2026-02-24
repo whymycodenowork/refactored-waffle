@@ -10,8 +10,5 @@ public struct LevelData
     /// </summary>
     public Tile[,,] tiles;
 
-    /// <summary>
-    /// The player groups in the level.
-    /// </summary>
-    public PlayerGroup[] playerGroups;
+    // add more as needed
 }

@@ -7,29 +7,40 @@ using UnityEngine;
 [System.Serializable]
 public class MovementArrow : MonoBehaviour
 {
-    MeshRenderer meshRenderer;
+    Material material;
 
     public Vector3Int direction;
 
+    private bool hovering = false;
+
     public void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        material = GetComponent<MeshRenderer>().material;
+        material.EnableKeyword("_EMISSION"); // make it glow so can see it even if the lighting is bad
+        material.SetColor("_EmissionColor", Color.white * 2);
     }
 
     public void OnMouseEnter()
     {
-        meshRenderer.material.color = Color.white;
-        transform.localScale.Set(1.2f, 1.2f, 1.2f);
+        material.SetColor("_BaseColor", Color.white * 2);
+        transform.localScale *= 1.2f;
+
+        hovering = true;
     }
 
     public void OnMouseExit()
     {
-        meshRenderer.material.color = Color.grey;
-        transform.localScale.Set(1f, 1f, 1f);
+        material.SetColor("_BaseColor", Color.gray9);
+        transform.localScale /= 1.2f;
+
+        hovering = false;
     }
 
-    public void OnClick()
+    private void Update()
     {
-        Level.Instance.OnArrowClicked(direction);
+        if (hovering && Input.GetMouseButtonDown(0))
+        {
+            Level.Instance.OnArrowClicked(direction);
+        }
     }
 }
